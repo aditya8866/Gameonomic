@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "./components/lightswind.css";
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+  background-color: black;
+  color: white;
+  overflow-x: hidden;
+}
+
+.grid > div {
+  grid-row: var(--r);
+  grid-column: var(--c);
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.orbitron {
+  font-family: "Orbitron", sans-serif;
+}
