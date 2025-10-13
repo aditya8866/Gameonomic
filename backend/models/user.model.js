@@ -49,6 +49,9 @@ const userSchema = new mongoose.Schema({
     select: false
   },
 
+  otp: { type: Number },             // ✅ Add this
+  otpExpiry: { type: Date },  
+
   history: {
     type: [historySchema]
   },
@@ -65,6 +68,7 @@ userSchema.methods.generateAuthToken = function () {
 userSchema.methods.comparePassword = async function (UserEnteredPassword) {
   return bcrypt.compare(UserEnteredPassword, this.password);
 };
+
 
 userSchema.statics.hashPassword = async function (password) {
   return bcrypt.hash(password, 10);

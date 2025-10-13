@@ -425,7 +425,9 @@ const Aboutus = () => {
               wallet.
             </p>
           </div>
+          
         </div>
+        
       </div>
     </>
   );

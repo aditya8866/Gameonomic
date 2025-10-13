@@ -1,7 +1,8 @@
 
 import express from "express";
 import { body } from "express-validator";
-import { registerUser,loginUser } from "../controllers/user.controllers.js";
+import { registerUser,loginUser, verifyOtp, getCurrentUser } from "../controllers/user.controllers.js";
+import authMiddleware from "../middleware/auth.js";
 
 
 const router = express.Router();
@@ -41,6 +42,9 @@ router.post(
   loginUser
 );
 
+router.post("/verify-otp", verifyOtp);
+
+router.get("/me", authMiddleware, getCurrentUser);
 
 
 

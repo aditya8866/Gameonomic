@@ -60,28 +60,63 @@ const SignupPage = () => {
   ];
 
   // handle signup
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    const newUserData = {
-      firstname: name,
-      lastname: "asdf",
-      email: email,
-      password: password,
-      
-    }
+const submitHandler = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUserData) 
-    if(response.status === 201) {
-      const data = response.data;
+  const newUserData = {
+    firstname: name,
+    lastname: "User",
+    email,
+    password,
+  };
 
-      // setUser(data.user)
-      const token = data.token;
-      localStorage.setItem('token', token);
-      // navigate('/captain-home');  
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/register`,
+      newUserData
+    );
+
+    if (response.status === 201) {
+      alert("✅ OTP sent to your email. Please verify.");
+      setStep("otp"); // switch to OTP screen
     }
-    
-    
+  } catch (error) {
+    console.error("Signup error:", error);
+    alert(
+      error.response?.data?.message ||
+        "❌ Signup failed. Please try again."
+    );
+  } finally {
+    setLoading(false);
   }
+};
+
+const handleVerifyOtp = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/verify-otp`,
+      { email, otp }
+    );
+
+    if (response.status === 200) {
+      alert("🎉 Account verified successfully! Redirecting to login...");
+      navigate("/login");
+    }
+  } catch (error) {
+    console.error("OTP verify error:", error);
+    alert(
+      error.response?.data?.message || "❌ Invalid or expired OTP."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   return (
     <>
