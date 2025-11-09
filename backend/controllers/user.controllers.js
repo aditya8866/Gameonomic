@@ -164,5 +164,43 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, verifyOtp, getCurrentUser };
+const logoutUser = async (req, res) => {
+  try {
+    const token =
+      req.token ||
+      (req.headers.authorization && req.headers.authorization.replace(/^Bearer\s+/i, ""));
+
+    if (!req.user) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    // ✅ If token array exists, remove current token from DB
+    if (token && Array.isArray(req.user.tokens)) {
+      req.user.tokens = req.user.tokens.filter(
+        (t) => (typeof t === "string" ? t !== token : t.token !== token)
+      );
+      await req.user.save();
+    }
+
+    // ✅ Always clear auth cookie if being used
+    if (req.cookies?.token) {
+      res.clearCookie("token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
+    }
+
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (err) {
+    console.error("❌ Logout Error:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+
+
+export { registerUser, loginUser, verifyOtp, getCurrentUser, logoutUser };
 

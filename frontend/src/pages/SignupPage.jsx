@@ -28,6 +28,8 @@ import axios from "axios";
 const SignupPage = () => {
   const navigate = useNavigate();
 
+  
+
   const [step, setStep] = useState("signup"); // "signup" | "otp"
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

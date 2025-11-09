@@ -1,7 +1,7 @@
 
 import express from "express";
 import { body } from "express-validator";
-import { registerUser,loginUser, verifyOtp, getCurrentUser } from "../controllers/user.controllers.js";
+import { registerUser,loginUser, verifyOtp, getCurrentUser, logoutUser } from "../controllers/user.controllers.js";
 import authMiddleware from "../middleware/auth.js";
 
 
@@ -47,7 +47,7 @@ router.post("/verify-otp", verifyOtp);
 router.get("/me", authMiddleware, getCurrentUser);
 
 
-
+router.post("/logout", logoutUser);
 
 
 export default router;

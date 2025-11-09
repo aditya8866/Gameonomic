@@ -4,11 +4,13 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 
+  // ✅ Restore theme instantly on startup
+
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <StrictMode>
       <App />
-      {/* <LoginPage/> */}
+      
     </StrictMode>
   </BrowserRouter>,
 );
