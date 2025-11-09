@@ -77,5 +77,3 @@ This is the backend for the Gameonomic project, built with Express.js and MongoD
 
 ---
 
-## License
-This project is licensed under the MIT License.
